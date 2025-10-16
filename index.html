@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>V2 – لوحة الفروع (Hotfix)</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">V2</div>
+    <div class="header-actions">
+      <button id="seedDemo" class="secondary">تجهيز بيانات</button>
+      <button id="langToggle" class="ghost"></button>
+      <button id="themeToggle" class="ghost"></button>
+      <span class="live-badge" id="liveBadge">—</span>
+    </div>
+  </header>
+
+  <div id="alertBar" class="alert-bar" style="display:none"></div>
+
+  <nav class="tabs">
+    <button data-tab="dashboard" class="active" id="tabDashboard"></button>
+    <button data-tab="add" id="tabAdd"></button>
+    <button data-tab="branches" id="tabBranches"></button>
+    <button data-tab="files" id="tabFiles"></button>
+    <button data-tab="settings" id="tabSettings"></button>
+    <button data-tab="public" id="tabPublic"></button>
+  </nav>
+
+  <main>
+    <section class="rank-strip">
+      <div class="rank-card"><div class="title">🥇 <span id="rkBestTitle"></span></div><div class="value" id="rkBestValue">—</div><div class="sub" id="rkBestSub">—</div></div>
+      <div class="rank-card"><div class="title">📊 <span id="rkMostTitle"></span></div><div class="value" id="rkMostValue">—</div><div class="sub" id="rkMostSub">—</div></div>
+      <div class="rank-card"><div class="title">⚠️ <span id="rkWorstTitle"></span></div><div class="value" id="rkWorstValue">—</div><div class="sub" id="rkWorstSub">—</div></div>
+      <div class="rank-card"><div class="title">🏅 <span id="rkPointsTitle"></span></div><div class="value" id="rkPointsValue">—</div><div class="sub" id="rkPointsSub">—</div></div>
+    </section>
+
+    <section id="dashboard" class="tab active">
+      <div class="hero"><h1 id="heroTitle"></h1><p id="heroSubtitle"></p></div>
+      <div class="filters">
+        <div class="row">
+          <label><span id="lblFrom"></span><input type="date" id="dateFrom"></label>
+          <label><span id="lblTo"></span><input type="date" id="dateTo"></label>
+          <button class="secondary" id="btnWeek"></button>
+          <button class="secondary" id="btnMonth"></button>
+          <button class="primary" id="btnApply"></button>
+        </div>
+        <div class="row">
+          <label><span id="lblTarget"></span><input type="number" step="0.1" min="0" max="5" id="targetRating" value="4.2"></label>
+          <button class="secondary" id="btnRecalculate"></button>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="card"><h4 id="ch1Title"></h4><canvas id="chartRatings" height="120"></canvas></div>
+        <div class="card"><h4 id="ch2Title"></h4><canvas id="chartReviews" height="120"></canvas></div>
+      </div>
+
+      <div class="cards" id="branchesGrid"></div>
+
+      <div class="table-wrap">
+        <h3 id="tblTitle"></h3>
+        <table id="branchesTable">
+          <thead><tr>
+            <th id="thName"></th><th id="thRating"></th><th id="thReviews"></th>
+            <th id="thBefore"></th><th id="thAfter"></th><th id="thChange"></th><th id="thToTarget"></th>
+          </tr></thead>
+          <tbody id="branchesTbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="add" class="tab">
+      <h2 id="addTitle"></h2>
+      <form id="addForm" class="form">
+        <label><span id="lblBranchName"></span><input type="text" id="branchName" required></label>
+        <label><span id="lblMapsUrl"></span><input type="url" id="mapsUrl"></label>
+        <label><span id="lblPlaceId"></span><input type="text" id="placeId" placeholder="place_id (اختياري)"></label>
+        <div class="row">
+          <button type="submit" class="primary" id="btnAddBranch"></button>
+          <button type="button" id="btnResolvePlaceId" class="secondary"></button>
+        </div>
+      </form>
+    </section>
+
+    <section id="branches" class="tab">
+      <h2 id="branchesTitle"></h2>
+      <div id="branchesList"></div>
+    </section>
+
+    <section id="files" class="tab">
+      <h2 id="filesTitle"></h2>
+      <div class="row">
+        <label><span id="lblExportFrom"></span><input type="date" id="expFrom"></label>
+        <label><span id="lblExportTo"></span><input type="date" id="expTo"></label>
+        <button class="primary" id="btnExportCsv"></button>
+      </div>
+      <p id="exportNote" class="muted"></p>
+    </section>
+
+    <section id="settings" class="tab">
+      <h2 id="settingsTitle"></h2>
+      <p class="muted" id="settingsTips"></p>
+    </section>
+
+    <section id="public" class="tab">
+      <h2 id="publicTitle"></h2>
+      <p class="muted" id="publicNote"></p>
+      <div class="cards" id="publicGrid"></div>
+    </section>
+  </main>
+
+  <footer class="app-footer"><span id="footerText"></span></footer>
+  <script src="app.js"></script>
+</body>
+</html>
